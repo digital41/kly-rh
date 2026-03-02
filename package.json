@@ -1,0 +1,22 @@
+{
+  "name": "kly-rh",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n DB,API,WEB -c blue,green,cyan \"npm run dev:db\" \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "npm run dev -w @kly-rh/frontend",
+    "dev:backend": "npm run dev -w @kly-rh/backend",
+    "dev:db": "docker compose up",
+    "setup": "node scripts/setup.mjs",
+    "db:migrate": "cd packages/backend && npx prisma migrate dev --schema=src/prisma/schema.prisma",
+    "db:seed": "npm run db:seed -w @kly-rh/backend",
+    "db:reset": "cd packages/backend && npx prisma migrate reset --force --schema=src/prisma/schema.prisma",
+    "build:frontend": "npm run build -w @kly-rh/frontend",
+    "build:backend": "npm run build -w @kly-rh/backend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

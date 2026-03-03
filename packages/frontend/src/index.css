@@ -12,10 +12,10 @@
   --color-background: #F1F5F9;
   --color-border: #E2E8F0;
 
-  /* Text */
+  /* Text (WCAG AA compliant: ≥4.5:1 on white) */
   --color-text: #0F172A;
-  --color-text-secondary: #64748B;
-  --color-text-tertiary: #94A3B8;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #64748B;
 
   /* Today marker */
   --color-today: #7C3AED;
@@ -106,6 +106,12 @@ body {
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Shimmer animation for skeletons */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 /* Slide-down keyframe for day detail */

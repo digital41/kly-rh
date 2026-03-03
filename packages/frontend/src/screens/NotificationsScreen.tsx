@@ -1,6 +1,20 @@
 import { useNotificationStore } from '@/stores/notification.store';
 import { EmptyState } from '@/components/ui/EmptyState';
 
+/** Safely render text containing <strong> tags without dangerouslySetInnerHTML */
+function SafeHtml({ html }: { html: string }) {
+  const parts = html.split(/(<strong>.*?<\/strong>)/g);
+  return (
+    <>
+      {parts.map((part, i) => {
+        const match = part.match(/^<strong>(.*)<\/strong>$/);
+        if (match) return <strong key={i}>{match[1]}</strong>;
+        return <span key={i}>{part}</span>;
+      })}
+    </>
+  );
+}
+
 export function NotificationsScreen() {
   const { notifications, markRead, markAllRead } = useNotificationStore();
   const hasUnread = notifications.some((n) => n.unread);
@@ -50,10 +64,9 @@ export function NotificationsScreen() {
 
             {/* Content */}
             <div className="flex-1 min-w-0">
-              <p
-                className="text-[13px] text-text leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: notif.text }}
-              />
+              <p className="text-[13px] text-text leading-relaxed">
+                <SafeHtml html={notif.text} />
+              </p>
               <p className="text-[11px] text-text-tertiary mt-1">{notif.time}</p>
             </div>
           </button>

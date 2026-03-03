@@ -16,7 +16,7 @@ export function Header({ title, showBack, onBack, showAvatar, initials, onAvatar
         <>
           <button
             onClick={onBack}
-            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-border transition-colors"
+            className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-border transition-colors -ml-1"
             aria-label="Retour a la page precedente"
           >
             <svg
@@ -39,7 +39,7 @@ export function Header({ title, showBack, onBack, showAvatar, initials, onAvatar
             {title}
           </span>
           {/* Spacer to balance the back button */}
-          <div className="w-9" />
+          <div className="w-11" />
         </>
       ) : (
         <>
@@ -54,7 +54,7 @@ export function Header({ title, showBack, onBack, showAvatar, initials, onAvatar
           {showAvatar && (
             <button
               onClick={onAvatarClick}
-              className="w-8 h-8 rounded-full bg-primary-light text-white text-xs font-semibold flex items-center justify-center active:scale-90 transition-transform"
+              className="w-11 h-11 rounded-full bg-primary-light text-white text-xs font-semibold flex items-center justify-center active:scale-90 transition-transform"
               aria-label="Profil"
             >
               {initials}

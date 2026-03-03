@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUIStore } from '@/stores/ui.store';
+import { useAuthStore } from '@/stores/auth.store';
 import { useLeaveStore } from '@/stores/leave.store';
 import { useNotificationStore } from '@/stores/notification.store';
 import { Avatar } from '@/components/ui/Avatar';
@@ -9,14 +9,17 @@ import { PROFILES, BALANCES, EMPLOYEES } from '@/services/mock/mock-data';
 
 export function ProfileScreen() {
   const navigate = useNavigate();
-  const currentRole = useUIStore((s) => s.currentRole);
+  const { user, logout } = useAuthStore();
   const leaves = useLeaveStore((s) => s.leaves);
   const pendingApprovals = useMemo(() => leaves.filter((l) => l.status === 'pending'), [leaves]);
   const notifications = useNotificationStore((s) => s.notifications);
   const unreadCount = useMemo(() => notifications.filter((n) => n.unread).length, [notifications]);
   const [timeTrackingEnabled, setTimeTrackingEnabled] = useState(false);
 
-  const profile = PROFILES[currentRole as keyof typeof PROFILES] ?? PROFILES.employee;
+  const currentRole = user?.role ?? 'employee';
+  const profile = user
+    ? { name: user.name, initials: user.initials, role: PROFILES[currentRole as keyof typeof PROFILES]?.role ?? '' }
+    : PROFILES.employee;
   const isManager = currentRole === 'manager';
 
   // Calculate remaining non-remote days
@@ -270,7 +273,7 @@ export function ProfileScreen() {
 
         {/* Logout */}
         <button
-          onClick={() => navigate('/login')}
+          onClick={() => { logout(); navigate('/login'); }}
           className="w-full py-4 bg-rejected-bg text-rejected rounded-[12px] text-[15px] font-semibold transition-all active:bg-[#FEE2E2]"
         >
           Deconnexion

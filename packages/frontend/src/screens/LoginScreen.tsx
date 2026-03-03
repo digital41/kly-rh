@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUIStore } from '@/stores/ui.store';
+import { useAuthStore } from '@/stores/auth.store';
 import type { UserRole } from '@kly-rh/shared';
 
-const DEMO_ACCOUNTS: { role: UserRole; name: string; email: string; password: string }[] = [
-  { role: 'manager', name: 'Sophie Laurent', email: 'sophie.laurent@kly.fr', password: 'kly2026!' },
-  { role: 'employee', name: 'Thomas Petit', email: 'thomas.petit@kly.fr', password: 'kly2026!' },
+const DEMO_ACCOUNTS: { role: UserRole; name: string; initials: string; email: string; password: string }[] = [
+  { role: 'manager', name: 'Sophie Laurent', initials: 'SL', email: 'sophie.laurent@kly.fr', password: 'kly2026!' },
+  { role: 'employee', name: 'Thomas Petit', initials: 'TP', email: 'thomas.petit@kly.fr', password: 'kly2026!' },
 ];
 
 export function LoginScreen() {
   const navigate = useNavigate();
-  const switchRole = useUIStore((s) => s.switchRole);
-  const [email, setEmail] = useState('sophie.laurent@kly.fr');
-  const [password, setPassword] = useState('kly2026!');
+  const login = useAuthStore((s) => s.login);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -28,13 +28,13 @@ export function LoginScreen() {
       return;
     }
 
-    switchRole(account.role);
+    login({ name: account.name, initials: account.initials, role: account.role, email: account.email });
     navigate('/');
   };
 
   const handleDemoLogin = (role: UserRole) => {
     const account = DEMO_ACCOUNTS.find((a) => a.role === role)!;
-    switchRole(account.role);
+    login({ name: account.name, initials: account.initials, role: account.role, email: account.email });
     navigate('/');
   };
 

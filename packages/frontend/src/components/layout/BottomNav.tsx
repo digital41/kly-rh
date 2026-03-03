@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useUIStore } from '@/stores/ui.store';
+import { useAuthStore } from '@/stores/auth.store';
 
 interface BottomNavProps {
   profileBadge: number;
@@ -113,9 +113,9 @@ const tabs: Tab[] = [
 export function BottomNav({ profileBadge }: BottomNavProps) {
   const location = useLocation();
   const navigate = useNavigate();
-  const currentRole = useUIStore((s) => s.currentRole);
+  const user = useAuthStore((s) => s.user);
 
-  const visibleTabs = currentRole === 'manager'
+  const visibleTabs = user?.role === 'manager'
     ? tabs
     : tabs.filter((t) => t.path !== '/team');
 

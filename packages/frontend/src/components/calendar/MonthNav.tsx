@@ -11,7 +11,7 @@ export function MonthNav({ month, year, onChangeMonth }: MonthNavProps) {
     <div className="flex items-center justify-between px-5 py-2">
       <button
         onClick={() => onChangeMonth(-1)}
-        className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-border transition-colors"
+        className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-border transition-colors"
         aria-label="Mois précédent"
       >
         <svg
@@ -34,7 +34,7 @@ export function MonthNav({ month, year, onChangeMonth }: MonthNavProps) {
 
       <button
         onClick={() => onChangeMonth(1)}
-        className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-border transition-colors"
+        className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-border transition-colors"
         aria-label="Mois suivant"
       >
         <svg

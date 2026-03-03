@@ -265,11 +265,13 @@ export function LeaveRequestSheet() {
         </div>
 
         {/* Past date validation error */}
-        {isPastDate && (
-          <p className="text-[12px] text-red-500 font-medium mt-2">
-            La date de debut doit etre dans le futur
-          </p>
-        )}
+        <div aria-live="polite">
+          {isPastDate && (
+            <p className="text-[12px] text-red-500 font-medium mt-2" role="alert">
+              La date de debut doit etre dans le futur
+            </p>
+          )}
+        </div>
 
         {/* Day count summary */}
         <div className="mt-3 bg-primary-lighter rounded-[10px] px-3 py-2 flex items-center justify-between">

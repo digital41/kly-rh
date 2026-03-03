@@ -5,6 +5,7 @@ import { Fab } from '@/components/layout/Fab';
 import { LeaveRequestSheet } from '@/components/leave-form/LeaveRequestSheet';
 import { Toast } from '@/components/ui/Toast';
 import { useUIStore } from '@/stores/ui.store';
+import { useAuthStore } from '@/stores/auth.store';
 import { useNotificationStore } from '@/stores/notification.store';
 
 interface RouteConfig {
@@ -30,6 +31,7 @@ export function AppShell() {
   const location = useLocation();
   const navigate = useNavigate();
   const openSheet = useUIStore((s) => s.openSheet);
+  const user = useAuthStore((s) => s.user);
   const notifications = useNotificationStore((s) => s.notifications);
   const unreadCount = notifications.filter((n) => n.unread).length;
 
@@ -48,7 +50,7 @@ export function AppShell() {
         showBack={config.showBack}
         onBack={() => navigate(-1)}
         showAvatar={config.showAvatar}
-        initials="SL"
+        initials={user?.initials ?? '??'}
         onAvatarClick={() => navigate('/profile')}
       />
 

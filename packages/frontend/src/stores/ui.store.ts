@@ -1,14 +1,11 @@
 import { create } from 'zustand';
-import type { UserRole } from '@kly-rh/shared';
 
 interface UIState {
-  currentRole: UserRole;
   isSheetOpen: boolean;
   sheetStartDate: string | null;
   sheetEndDate: string | null;
   toastMessage: string | null;
   toastTimeout: ReturnType<typeof setTimeout> | null;
-  switchRole: (role: UserRole) => void;
   openSheet: () => void;
   openSheetWithDates: (start: string, end: string) => void;
   closeSheet: () => void;
@@ -17,14 +14,11 @@ interface UIState {
 }
 
 export const useUIStore = create<UIState>((set, get) => ({
-  currentRole: 'manager',
   isSheetOpen: false,
   sheetStartDate: null,
   sheetEndDate: null,
   toastMessage: null,
   toastTimeout: null,
-
-  switchRole: (role) => set({ currentRole: role }),
 
   openSheet: () => set({ isSheetOpen: true, sheetStartDate: null, sheetEndDate: null }),
 

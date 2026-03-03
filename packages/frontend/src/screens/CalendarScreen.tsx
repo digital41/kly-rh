@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useCalendarStore } from '@/stores/calendar.store';
 import { useUIStore } from '@/stores/ui.store';
+import { useAuthStore } from '@/stores/auth.store';
 import { SummaryStrip } from '@/components/calendar/SummaryStrip';
 import { UpcomingLeave } from '@/components/calendar/UpcomingLeave';
 import { MonthNav } from '@/components/calendar/MonthNav';
@@ -14,8 +15,8 @@ export function CalendarScreen() {
   const { currentMonth, currentYear, changeMonth, rangeStart, rangeEnd, clearRange } =
     useCalendarStore();
   const openSheetWithDates = useUIStore((s) => s.openSheetWithDates);
-  const currentRole = useUIStore((s) => s.currentRole);
-  const isManager = currentRole === 'manager';
+  const user = useAuthStore((s) => s.user);
+  const isManager = user?.role === 'manager';
 
   const rangeLabel = useMemo(() => {
     if (rangeStart === null) return null;
